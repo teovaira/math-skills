@@ -124,3 +124,61 @@ func TestMedian(t *testing.T) {
 		})
 	}
 }
+
+// TestVariance tests the variance calculation function with various inputs
+func TestVariance(t *testing.T) {
+	// Table-driven tests for variance
+	tests := []struct {
+		name     string      // Description of the test case
+		numbers  []float64   // Input data
+		expected float64     // Expected result
+	}{
+		{
+			name:     "simple case",
+			numbers:  []float64{4, 8, 6, 5, 3},
+			expected: 2.96, // Manual calculation from theory
+		},
+		{
+			name:     "all same values - zero variance",
+			numbers:  []float64{5, 5, 5, 5},
+			expected: 0.0, // No spread = zero variance
+		},
+		{
+			name:     "single number",
+			numbers:  []float64{42},
+			expected: 0.0, // Single value has no variance
+		},
+		{
+			name:     "two numbers",
+			numbers:  []float64{1, 5},
+			expected: 4.0, // avg=3, (1-3)²=4, (5-3)²=4, sum=8, 8/2=4
+		},
+		{
+			name:     "integers with integer variance",
+			numbers:  []float64{1, 2, 3, 4, 5},
+			expected: 2.0, // avg=3, sum of squares=10, 10/5=2
+		},
+		{
+			name:     "negative numbers",
+			numbers:  []float64{-10, -20, -30},
+			expected: 66.66666666666667, // avg=-20
+		},
+		{
+			name:     "mixed positive and negative",
+			numbers:  []float64{-5, 0, 5},
+			expected: 16.666666666666668, // avg=0
+		},
+	}
+
+	// Run each test case
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := variance(tt.numbers)
+			// Use a small delta for float comparison due to precision
+			delta := 0.00001
+			if result < tt.expected-delta || result > tt.expected+delta {
+				t.Errorf("variance(%v) = %f; expected %f", tt.numbers, result, tt.expected)
+			}
+		})
+	}
+}
