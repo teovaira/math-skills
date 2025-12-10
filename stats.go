@@ -74,3 +74,41 @@ func median(numbers []float64) float64 {
 		return (mid1 + mid2) / 2.0
 	}
 }
+
+// variance calculates the variance (measure of spread) of a slice of numbers.
+// Variance measures how far numbers are spread out from their average.
+//
+// Formula: variance = Σ(xᵢ - μ)² / n
+//
+// Algorithm:
+//  1. Calculate the average (mean) of the numbers
+//  2. For each number, subtract the average and square the result
+//  3. Sum all the squared differences
+//  4. Divide by the count of numbers
+//
+// Parameters:
+//   - numbers: slice of float64 values
+//
+// Returns:
+//   - float64: the variance
+//
+// Example:
+//
+//	variance([]float64{4, 8, 6, 5, 3}) returns 2.96
+//	variance([]float64{5, 5, 5, 5}) returns 0.0 (no spread)
+func variance(numbers []float64) float64 {
+	// Step 1: Calculate the average (reusing our average function)
+	avg := average(numbers)
+
+	// Step 2 & 3: Calculate sum of squared differences
+	sumSquaredDiff := 0.0
+	for _, num := range numbers {
+		// Difference from average
+		diff := num - avg
+		// Square the difference and add to sum
+		sumSquaredDiff += diff * diff
+	}
+
+	// Step 4: Divide by count to get variance
+	return sumSquaredDiff / float64(len(numbers))
+}
