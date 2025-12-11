@@ -219,7 +219,7 @@ func TestStandardDeviation(t *testing.T) {
 		{
 			name:     "perfect square variance",
 			numbers:  []float64{1, 5, 9},
-			expected: 2.6666666666666665, // √(64/9)
+			expected: 3.265986323710904, // √(32/3) = √10.666...
 		},
 		{
 			name:     "negative numbers",
