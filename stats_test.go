@@ -245,3 +245,110 @@ func TestStandardDeviation(t *testing.T) {
 		})
 	}
 }
+
+// TestReadNumbersFromFile tests the file reading functionality
+func TestReadNumbersFromFile(t *testing.T) {
+	// Table-driven tests for file reading
+	tests := []struct {
+		name          string      // Description of the test case
+		filename      string      // Path to test file
+		expected      []float64   // Expected numbers read
+		expectError   bool        // Should this test produce an error?
+		errorContains string      // Expected error message substring
+	}{
+		{
+			name:        "valid simple file",
+			filename:    "testdata/valid_simple.txt",
+			expected:    []float64{189, 113, 121, 114, 145, 110},
+			expectError: false,
+		},
+		{
+			name:        "single number",
+			filename:    "testdata/single_number.txt",
+			expected:    []float64{42},
+			expectError: false,
+		},
+		{
+			name:        "file with decimals",
+			filename:    "testdata/with_decimals.txt",
+			expected:    []float64{10.5, 20.3, 15.7},
+			expectError: false,
+		},
+		{
+			name:          "empty file",
+			filename:      "testdata/empty.txt",
+			expected:      nil,
+			expectError:   true,
+			errorContains: "no valid numbers",
+		},
+		{
+			name:          "file does not exist",
+			filename:      "testdata/nonexistent.txt",
+			expected:      nil,
+			expectError:   true,
+			errorContains: "no such file",
+		},
+		{
+			name:        "file with invalid data - skip invalid lines",
+			filename:    "testdata/invalid_data.txt",
+			expected:    []float64{189, 121, 145},
+			expectError: false,
+		},
+	}
+
+	// Run each test case
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result, err := readNumbersFromFile(tt.filename)
+
+			// Check error expectation
+			if tt.expectError {
+				if err == nil {
+					t.Errorf("expected error containing '%s' but got none", tt.errorContains)
+					return
+				}
+				if tt.errorContains != "" && !containsString(err.Error(), tt.errorContains) {
+					t.Errorf("expected error containing '%s' but got: %v", tt.errorContains, err)
+				}
+				return
+			}
+
+			// Check no error when not expected
+			if err != nil {
+				t.Errorf("unexpected error: %v", err)
+				return
+			}
+
+			// Check the numbers match
+			if !floatSlicesEqual(result, tt.expected) {
+				t.Errorf("readNumbersFromFile(%s) = %v; expected %v", tt.filename, result, tt.expected)
+			}
+		})
+	}
+}
+
+// Helper function to check if two float slices are equal
+func floatSlicesEqual(a, b []float64) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
+}
+
+// Helper function to check if a string contains a substring
+func containsString(s, substr string) bool {
+	return len(s) >= len(substr) && (s == substr || len(substr) == 0 ||
+		func() bool {
+			for i := 0; i <= len(s)-len(substr); i++ {
+				if s[i:i+len(substr)] == substr {
+					return true
+				}
+			}
+			return false
+		}())
+}
