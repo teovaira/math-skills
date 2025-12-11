@@ -1,6 +1,9 @@
 package main
 
-import "sort"
+import (
+	"math"
+	"sort"
+)
 
 // average calculates the arithmetic mean of a slice of numbers.
 // It returns the sum of all numbers divided by the count.
@@ -111,4 +114,32 @@ func variance(numbers []float64) float64 {
 
 	// Step 4: Divide by count to get variance
 	return sumSquaredDiff / float64(len(numbers))
+}
+
+// standardDeviation calculates the standard deviation of a slice of numbers.
+// Standard deviation is the square root of variance and measures the typical
+// distance of values from the average in the same units as the original data.
+//
+// Formula: standardDeviation = √variance
+//
+// Algorithm:
+//  1. Calculate the variance (reusing our variance function)
+//  2. Return the square root of the variance
+//
+// Parameters:
+//   - numbers: slice of float64 values
+//
+// Returns:
+//   - float64: the standard deviation
+//
+// Example:
+//
+//	standardDeviation([]float64{4, 8, 6, 5, 3}) returns ~1.72
+//	standardDeviation([]float64{5, 5, 5, 5}) returns 0.0 (no spread)
+func standardDeviation(numbers []float64) float64 {
+	// Calculate variance using our variance function
+	v := variance(numbers)
+
+	// Return the square root of variance
+	return math.Sqrt(v)
 }
