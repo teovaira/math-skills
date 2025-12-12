@@ -42,6 +42,11 @@ test-race:
 	@echo "Running tests with race detector..."
 	$(GOTEST) -race -v ./...
 
+# Run benchmarks
+bench:
+	@echo "Running benchmarks..."
+	$(GOTEST) -bench=. -benchmem
+
 # Clean build artifacts
 clean:
 	@echo "Cleaning..."
@@ -78,6 +83,7 @@ help:
 	@echo "  make test         - Run all tests"
 	@echo "  make test-coverage - Run tests with coverage report"
 	@echo "  make test-race    - Run tests with race detector"
+	@echo "  make bench        - Run benchmark tests"
 	@echo "  make clean        - Clean build artifacts"
 	@echo "  make deps         - Download dependencies"
 	@echo "  make fmt          - Format code"
@@ -88,4 +94,4 @@ help:
 # Default target
 .DEFAULT_GOAL := build
 
-.PHONY: build run test test-coverage test-race clean deps fmt lint install help
+.PHONY: build run test test-coverage test-race bench clean deps fmt lint install help
