@@ -177,4 +177,4 @@ This project is created for educational purposes as part of the Zone01 Athens cu
 
 ## 👤 Author
 
-Developed by a Zone01 Athens student learning Go programming and software development best practices.
+Developed by Theodore Vairaktaris, a Zone01 Athens student learning Go programming and software development best practices.
