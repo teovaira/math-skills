@@ -14,9 +14,6 @@ Go program that calculates statistical measures (average, median, variance, stan
 ## Setup Commands
 
 ```bash
-# Install dependencies (verify Go modules)
-make deps
-
 # Build binary
 make build
 
@@ -35,9 +32,6 @@ make test-coverage
 
 # Run benchmarks
 make bench
-
-# Run with race detector
-make test-race
 ```
 
 ## Code Style
@@ -76,7 +70,8 @@ func TestFunction(t *testing.T) {
 math-skills/
 ├── main.go              # Entry point (argument parsing, orchestration)
 ├── stats.go             # Statistical functions (average, median, variance, stddev)
-├── stats_test.go        # Unit tests (37 tests total)
+├── io.go                # File I/O operations
+├── stats_test.go        # Unit and integration tests
 ├── stats_bench_test.go  # Performance benchmarks
 ├── testdata/            # Test data files
 └── Makefile             # Build automation
@@ -86,7 +81,8 @@ math-skills/
 
 - **main.go**: Command-line interface only, no business logic
 - **stats.go**: Pure functions for calculations, detailed comments with formulas
-- **Separation**: File I/O separate from calculations
+- **io.go**: File I/O operations separate from calculations
+- **Separation of concerns**: I/O, calculation, and presentation logic in separate files
 
 ## Agent Boundaries
 
