@@ -26,11 +26,7 @@ This project is designed to demonstrate:
    git clone https://github.com/YOUR-USERNAME/math-skills.git
    cd math-skills
    ```
-3. Install dependencies:
-   ```bash
-   make deps
-   ```
-4. Run tests to verify setup:
+3. Run tests to verify setup:
    ```bash
    make test
    ```
@@ -167,11 +163,11 @@ refactor: simplify average calculation logic
 # Run all tests
 make test
 
-# Run tests with race detector
-make test-race
-
 # Check test coverage
 make test-coverage
+
+# Run benchmarks
+make bench
 ```
 
 ## 🐛 Reporting Bugs
