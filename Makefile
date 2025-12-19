@@ -1,35 +1,52 @@
 # Makefile for math-skills project
+# A Makefile automates common development tasks
 
-# Binary name
+# ==============================================================================
+# CONFIGURATION VARIABLES
+# ==============================================================================
+
+# Name of the compiled program
 BINARY_NAME=math-skills
 
-# Build directory
+# Directory where compiled binaries will be stored
 BUILD_DIR=build
 
-# Go commands
+# Go command shortcuts (so we can type $(GOBUILD) instead of "go build")
 GOCMD=go
 GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test
-GOGET=$(GOCMD) get
 GOMOD=$(GOCMD) mod
 
-# Build the project
+# ==============================================================================
+# BUILD TARGETS
+# ==============================================================================
+
+# Default target - runs when you type just "make"
+# Creates the executable binary in build/ directory
 build:
 	@echo "Building $(BINARY_NAME)..."
 	@mkdir -p $(BUILD_DIR)
 	$(GOBUILD) -o $(BUILD_DIR)/$(BINARY_NAME) -v
 
-# Run the program
+# Run the program (note: you still need to provide filename as argument)
+# Usage: make run ARGS="data.txt"
 run:
 	$(GOCMD) run .
 
-# Run all tests
+# ==============================================================================
+# TESTING TARGETS
+# ==============================================================================
+
+# Run all unit and integration tests
+# -v = verbose (shows test names)
+# ./... = test all packages recursively
 test:
 	@echo "Running tests..."
 	$(GOTEST) -v ./...
 
-# Run tests with coverage
+# Run tests and generate coverage report
+# Creates coverage.html file you can open in a browser
 test-coverage:
 	@echo "Running tests with coverage..."
 	$(GOTEST) -cover ./...
@@ -37,61 +54,79 @@ test-coverage:
 	$(GOCMD) tool cover -html=coverage.out -o coverage.html
 	@echo "Coverage report generated: coverage.html"
 
-# Run tests with race detector
-test-race:
-	@echo "Running tests with race detector..."
-	$(GOTEST) -race -v ./...
-
-# Run benchmarks
+# Run performance benchmarks
+# -bench=. runs all benchmark functions
+# -benchmem shows memory allocations
 bench:
 	@echo "Running benchmarks..."
 	$(GOTEST) -bench=. -benchmem
 
-# Clean build artifacts
+# ==============================================================================
+# CODE QUALITY TARGETS
+# ==============================================================================
+
+# Automatically format all Go code according to Go standards
+# This fixes indentation, spacing, etc.
+fmt:
+	@echo "Formatting code..."
+	$(GOCMD) fmt ./...
+
+# Run linter to check for code quality issues
+# NOTE: Requires golangci-lint to be installed separately
+# Install: https://golangci-lint.run/usage/install/
+lint:
+	@echo "Running linter..."
+	golangci-lint run
+
+# ==============================================================================
+# CLEANUP TARGETS
+# ==============================================================================
+
+# Remove all generated files (binaries, coverage reports)
 clean:
 	@echo "Cleaning..."
 	$(GOCLEAN)
 	rm -rf $(BUILD_DIR)
 	rm -f coverage.out coverage.html
 
-# Download dependencies
+# ==============================================================================
+# UTILITY TARGETS
+# ==============================================================================
+
+# Tidy up Go module dependencies
+# Removes unused dependencies and adds missing ones
 deps:
-	@echo "Downloading dependencies..."
-	$(GOMOD) download
+	@echo "Tidying Go modules..."
 	$(GOMOD) tidy
 
-# Format code
-fmt:
-	@echo "Formatting code..."
-	$(GOCMD) fmt ./...
-
-# Run linter (requires golangci-lint)
-lint:
-	@echo "Running linter..."
-	golangci-lint run
-
-# Install the binary
+# Install the binary to your system PATH
+# After this, you can run "math-skills" from anywhere
 install: build
 	@echo "Installing $(BINARY_NAME)..."
 	cp $(BUILD_DIR)/$(BINARY_NAME) $(GOPATH)/bin/
 
-# Show help
+# Show available make commands
 help:
 	@echo "Available targets:"
 	@echo "  make build         - Build the project"
-	@echo "  make run          - Run the program"
-	@echo "  make test         - Run all tests"
+	@echo "  make run           - Run the program"
+	@echo "  make test          - Run all tests"
 	@echo "  make test-coverage - Run tests with coverage report"
-	@echo "  make test-race    - Run tests with race detector"
-	@echo "  make bench        - Run benchmark tests"
-	@echo "  make clean        - Clean build artifacts"
-	@echo "  make deps         - Download dependencies"
-	@echo "  make fmt          - Format code"
-	@echo "  make lint         - Run linter"
-	@echo "  make install      - Install the binary"
-	@echo "  make help         - Show this help message"
+	@echo "  make bench         - Run benchmark tests"
+	@echo "  make fmt           - Format code"
+	@echo "  make lint          - Run linter (requires golangci-lint)"
+	@echo "  make clean         - Clean build artifacts"
+	@echo "  make deps          - Tidy Go modules"
+	@echo "  make install       - Install the binary"
+	@echo "  make help          - Show this help message"
 
-# Default target
+# ==============================================================================
+# SPECIAL MAKE DIRECTIVES
+# ==============================================================================
+
+# If you type just "make" with no target, it will run "build"
 .DEFAULT_GOAL := build
 
-.PHONY: build run test test-coverage test-race bench clean deps fmt lint install help
+# These are command names, not files
+# Without this, if you had a file named "test", Make would get confused
+.PHONY: build run test test-coverage bench fmt lint clean deps install help
