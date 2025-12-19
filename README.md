@@ -101,18 +101,25 @@ The project includes comprehensive test coverage:
 
 ```
 math-skills/
-├── main.go           # Entry point and main logic
-├── stats.go          # Statistical calculation functions
-├── stats_test.go     # Comprehensive unit tests
-├── testdata/         # Test data files
-│   ├── valid_simple.txt
-│   ├── single_number.txt
-│   ├── with_decimals.txt
-│   ├── empty.txt
-│   └── invalid_data.txt
-├── go.mod            # Go module definition
-├── README.md         # This file
-└── Makefile          # Build and test automation
+├── main.go                # Entry point and orchestration
+├── stats.go               # Statistical calculation functions
+├── io.go                  # File I/O operations
+├── stats_test.go          # Unit and integration tests
+├── stats_bench_test.go    # Performance benchmarks
+├── go.mod                 # Go module definition
+├── Makefile               # Build and test automation
+├── README.md              # Project documentation
+├── CONTRIBUTING.md        # Contribution guidelines
+├── CHANGELOG.md           # Version history
+├── AGENTS.md              # AI agent instructions
+├── LICENSE                # MIT License
+├── .gitignore             # Git ignore rules
+└── testdata/              # Test data files
+    ├── valid_simple.txt
+    ├── single_number.txt
+    ├── with_decimals.txt
+    ├── empty.txt
+    └── invalid_data.txt
 ```
 
 ## 🔧 Development
