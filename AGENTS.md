@@ -111,7 +111,7 @@ math-skills/
 # Format code
 make fmt
 
-# Run linter (requires golangci-lint installed)
+# Run go vet (built-in code analysis)
 make lint
 
 # Clean build artifacts
