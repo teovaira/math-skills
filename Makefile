@@ -71,12 +71,11 @@ fmt:
 	@echo "Formatting code..."
 	$(GOCMD) fmt ./...
 
-# Run linter to check for code quality issues
-# NOTE: Requires golangci-lint to be installed separately
-# Install: https://golangci-lint.run/usage/install/
+# Run Go's built-in code analysis tool
+# go vet examines Go source code and reports suspicious constructs
 lint:
-	@echo "Running linter..."
-	golangci-lint run
+	@echo "Running go vet..."
+	go vet ./...
 
 # ==============================================================================
 # CLEANUP TARGETS
@@ -114,7 +113,7 @@ help:
 	@echo "  make test-coverage - Run tests with coverage report"
 	@echo "  make bench         - Run benchmark tests"
 	@echo "  make fmt           - Format code"
-	@echo "  make lint          - Run linter (requires golangci-lint)"
+	@echo "  make lint          - Run go vet code analysis"
 	@echo "  make clean         - Clean build artifacts"
 	@echo "  make deps          - Tidy Go modules"
 	@echo "  make install       - Install the binary"
