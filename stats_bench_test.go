@@ -1,10 +1,12 @@
+// Package main provides statistical calculations for math-skills program.
+// This file contains benchmark tests for measuring the performance of
+// statistical functions with different dataset sizes.
 package main
 
 import (
 	"testing"
 )
 
-// Benchmark for average function
 func BenchmarkAverage(b *testing.B) {
 	numbers := []float64{189, 113, 121, 114, 145, 110, 99, 134, 156, 178}
 
@@ -14,7 +16,6 @@ func BenchmarkAverage(b *testing.B) {
 	}
 }
 
-// Benchmark for median function
 func BenchmarkMedian(b *testing.B) {
 	numbers := []float64{189, 113, 121, 114, 145, 110, 99, 134, 156, 178}
 
@@ -24,7 +25,6 @@ func BenchmarkMedian(b *testing.B) {
 	}
 }
 
-// Benchmark for variance function
 func BenchmarkVariance(b *testing.B) {
 	numbers := []float64{189, 113, 121, 114, 145, 110, 99, 134, 156, 178}
 
@@ -34,7 +34,6 @@ func BenchmarkVariance(b *testing.B) {
 	}
 }
 
-// Benchmark for standard deviation function
 func BenchmarkStandardDeviation(b *testing.B) {
 	numbers := []float64{189, 113, 121, 114, 145, 110, 99, 134, 156, 178}
 
@@ -44,7 +43,6 @@ func BenchmarkStandardDeviation(b *testing.B) {
 	}
 }
 
-// Benchmark for file reading with different sizes
 func BenchmarkReadNumbersFromFile(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -52,9 +50,7 @@ func BenchmarkReadNumbersFromFile(b *testing.B) {
 	}
 }
 
-// Benchmark with larger dataset
 func BenchmarkAverageLargeDataset(b *testing.B) {
-	// Generate 1000 numbers
 	numbers := make([]float64, 1000)
 	for i := 0; i < 1000; i++ {
 		numbers[i] = float64(i)
@@ -67,7 +63,6 @@ func BenchmarkAverageLargeDataset(b *testing.B) {
 }
 
 func BenchmarkMedianLargeDataset(b *testing.B) {
-	// Generate 1000 numbers
 	numbers := make([]float64, 1000)
 	for i := 0; i < 1000; i++ {
 		numbers[i] = float64(i)
@@ -80,7 +75,6 @@ func BenchmarkMedianLargeDataset(b *testing.B) {
 }
 
 func BenchmarkVarianceLargeDataset(b *testing.B) {
-	// Generate 1000 numbers
 	numbers := make([]float64, 1000)
 	for i := 0; i < 1000; i++ {
 		numbers[i] = float64(i)
@@ -93,7 +87,6 @@ func BenchmarkVarianceLargeDataset(b *testing.B) {
 }
 
 func BenchmarkStandardDeviationLargeDataset(b *testing.B) {
-	// Generate 1000 numbers
 	numbers := make([]float64, 1000)
 	for i := 0; i < 1000; i++ {
 		numbers[i] = float64(i)
