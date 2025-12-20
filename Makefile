@@ -29,10 +29,10 @@ build:
 	@mkdir -p $(BUILD_DIR)
 	$(GOBUILD) -o $(BUILD_DIR)/$(BINARY_NAME) -v
 
-# Run the program (note: you still need to provide filename as argument)
+# Run the program with arguments
 # Usage: make run ARGS="data.txt"
 run:
-	$(GOCMD) run .
+	$(GOCMD) run . $(ARGS)
 
 # ==============================================================================
 # TESTING TARGETS
@@ -115,7 +115,6 @@ help:
 	@echo "  make fmt           - Format code"
 	@echo "  make lint          - Run go vet code analysis"
 	@echo "  make clean         - Clean build artifacts"
-	@echo "  make deps          - Tidy Go modules"
 	@echo "  make install       - Install the binary"
 	@echo "  make help          - Show this help message"
 
